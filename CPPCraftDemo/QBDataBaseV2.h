@@ -9,7 +9,7 @@
 // are stored linearly in memory.
 struct QBRecordCollectionV2
 {
-	std::vector<unsigned> column0;
+	std::vector<unsigned> column0; // unique id column
 	std::vector<std::string> column1;
 	std::vector<long> column2;
 	std::vector<std::string> column3;
@@ -62,7 +62,7 @@ QBRecordCollectionV2 QBFindMatchingRecordsV2(const QBRecordCollectionV2& records
 			}
 		}
 	}
-	else
+	else if (columnName == "column3")
 	{
 		for (auto i = 0u; i < records.column3.size(); ++i)
 		{
@@ -75,13 +75,17 @@ QBRecordCollectionV2 QBFindMatchingRecordsV2(const QBRecordCollectionV2& records
 			}
 		}
 	}
+	else
+	{
+		assert(false && "Invalid column name!");
+	}
 
 	return result;
 };
 
 void DeleteRecordByIDV2(QBRecordCollectionV2& records, unsigned id)
 {
-	int idx = 0;
+	size_t idx = 0;
 	for (; idx < records.column0.size(); ++idx)
 	{
 		if (records.column0[idx] == id)
