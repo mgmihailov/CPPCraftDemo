@@ -79,6 +79,46 @@ QBRecordCollectionV2 QBFindMatchingRecordsV2(const QBRecordCollectionV2& records
 	return result;
 };
 
+void DeleteRecordByIDV2(QBRecordCollectionV2& records, unsigned id)
+{
+	int idx = 0;
+	for (; idx < records.column0.size(); ++idx)
+	{
+		if (records.column0[idx] == id)
+		{
+			break;
+		}
+	}
+
+	{
+		unsigned temp = records.column0[idx];
+		records.column0[idx] = records.column0[records.column0.size() - 1];
+		records.column0[records.column0.size() - 1] = temp;
+		records.column0.pop_back();
+	}
+
+	{
+		std::string temp = records.column1[idx];
+		records.column1[idx] = records.column1[records.column1.size() - 1];
+		records.column1[records.column1.size() - 1] = temp;
+		records.column1.pop_back();
+	}
+
+	{
+		long temp = records.column2[idx];
+		records.column2[idx] = records.column2[records.column2.size() - 1];
+		records.column2[records.column2.size() - 1] = temp;
+		records.column2.pop_back();
+	}
+
+	{
+		std::string temp = records.column3[idx];
+		records.column3[idx] = records.column3[records.column3.size() - 1];
+		records.column3[records.column3.size() - 1] = temp;
+		records.column3.pop_back();
+	}
+}
+
 // Utility function used to populate the data base with some data.
 QBRecordCollectionV2 populateDummyDataV2(const std::string& prefix, int numRecords)
 {

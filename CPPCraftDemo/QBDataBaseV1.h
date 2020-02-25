@@ -52,6 +52,19 @@ QBRecordCollection QBFindMatchingRecords(const QBRecordCollection& records, cons
 	return result;
 };
 
+void DeleteRecordByID(QBRecordCollection& records, unsigned id)
+{
+	auto it = std::find_if(records.begin(), records.end(), [&id](const QBRecord& rec)
+		{
+			return rec.column0 == id;
+		});
+
+	if (it != records.end())
+	{
+		records.erase(it);
+	}
+}
+
 /**
 	Utility to populate a record collection
 	prefix - prefix for the string value for every record
